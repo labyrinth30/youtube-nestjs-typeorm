@@ -21,10 +21,7 @@ import { User } from './user/entities/user.entity';
       password: 'postgres',
       database: 'postgres',
       synchronize: true,
-      entities: [
-        Product,
-        User,
-      ]
+      entities: [Product, User],
     }),
     AuthModule,
     UserModule,
