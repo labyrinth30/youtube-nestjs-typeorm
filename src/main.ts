@@ -8,13 +8,19 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
     .setTitle('GDGoC SKHU JWT API')
+    .addBasicAuth()
+    .addBearerAuth()
     .setDescription('GDGoC SKHU 로그인 API 문서입니다.')
     .setVersion('1.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup('api-docs', app, document);
+  SwaggerModule.setup('api-docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(
     new ValidationPipe({
