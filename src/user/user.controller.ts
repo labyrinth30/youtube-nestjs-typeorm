@@ -10,6 +10,7 @@ export class UserController {
 
   @ApiOperation({ summary: '유저 정보 조회' })
   @ApiResponse({ status: 200, description: '유저 정보 조회 성공' })
+  @ApiResponse({ status: 404, description: '없는 유저 조회' })
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Get(':username')
