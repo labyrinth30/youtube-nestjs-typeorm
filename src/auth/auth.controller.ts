@@ -2,7 +2,8 @@ import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LocalAuthGuard } from './guard/local.guard';
-import { ApiBasicAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guard/jwt.guard';
 
 @ApiTags('인증 관련 API')
 @Controller('auth')
@@ -29,5 +30,11 @@ export class AuthController {
   @Post('register')
   async register(@Body() dto: RegisterDto) {
     return this.authService.register(dto.username, dto.password);
+  }
+
+  @Post('token/refresh')
+  @UseGuards(JwtAuthGuard)
+  async refresh(@Request() req) {
+    return this.authService.login(req.user);
   }
 }

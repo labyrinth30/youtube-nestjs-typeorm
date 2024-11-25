@@ -8,6 +8,8 @@ import { Product } from './product/entities/product.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
+import { BoardModule } from './board/board.module';
+import { Board } from './board/entities/board.entity';
 
 @Module({
   imports: [
@@ -21,10 +23,11 @@ import { User } from './user/entities/user.entity';
       password: 'postgres',
       database: 'postgres',
       synchronize: true,
-      entities: [Product, User],
+      entities: [Product, User, Board],
     }),
     AuthModule,
     UserModule,
+    BoardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
