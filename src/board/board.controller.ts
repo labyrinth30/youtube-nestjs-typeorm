@@ -13,12 +13,13 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import {
   ApiBearerAuth,
-  ApiBody,
+  ApiBody, ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guard/jwt.guard';
+import { Board } from './entities/board.entity';
 
 @ApiTags('게시판 관련 API')
 @ApiBearerAuth()
@@ -47,8 +48,12 @@ export class BoardController {
   @ApiOperation({ summary: '게시물 id로 특정 게시물 상세 조회' })
   @ApiResponse({ status: 200, description: '특정 게시물 조회 성공' })
   @ApiResponse({ status: 404, description: '해당 id의 게시물이 없는 경우' })
+  @ApiCreatedResponse({
+    description: '특정 게시물 조회 성공',
+    type: Board,
+  })
   @Get(':id')
-  async findOneByBoardId(@Param('id') id: string) {
+  async findOneByBoardId(@Param('id') id: string): Promise<Board> {
     await this.boardService.incrementViewCount(+id);
     return this.boardService.getBoardById(+id);
   }

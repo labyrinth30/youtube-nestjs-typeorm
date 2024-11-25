@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, PickType } from '@nestjs/swagger';
 import { Board } from '../entities/board.entity';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
@@ -24,7 +24,7 @@ export class CreateBoardDto extends PickType(Board, [
   contents: string;
 
   @IsOptional()
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 0,
     description: 'The view count of the Board',
     required: false,
